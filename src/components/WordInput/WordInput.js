@@ -1,9 +1,9 @@
 import React, { useState } from "react";
 
-function WordInput() {
+function WordInput({ addGuess }) {
   const [word, setWord] = useState("");
 
-  const addGuess = (e) => {
+  const submitGuess = (e) => {
     e.preventDefault();
 
     if (word.length !== 5) {
@@ -11,12 +11,12 @@ function WordInput() {
       return;
     }
 
-    console.log({ word });
+    addGuess(word);
     setWord("");
   };
 
   return (
-    <form className="guess-input-wrapper" onSubmit={addGuess}>
+    <form className="guess-input-wrapper" onSubmit={submitGuess}>
       <label htmlFor="guess-input">Enter guess:</label>
       <input
         id="guess-input"
