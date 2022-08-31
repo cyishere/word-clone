@@ -3,19 +3,19 @@ export function checkGuess(guess, answer) {
     return null;
   }
 
-  const guessChars = guess.toUpperCase().split('');
-  const answerChars = answer.split('');
+  const guessChars = guess.toUpperCase().split("");
+  const answerChars = answer.split("");
 
   return guessChars.map((guessChar, index) => {
     const answerChar = answerChars[index];
 
     let status;
     if (guessChar === answerChar) {
-      status = 'correct';
+      status = "correct";
     } else if (answerChars.includes(guessChar)) {
-      status = 'misplaced';
+      status = "misplaced";
     } else {
-      status = 'incorrect';
+      status = "incorrect";
     }
     return {
       letter: guessChar,
@@ -23,3 +23,7 @@ export function checkGuess(guess, answer) {
     };
   });
 }
+
+export const isWinning = (checkedGuess) => {
+  return checkedGuess.every((guess) => guess.status === "correct");
+};

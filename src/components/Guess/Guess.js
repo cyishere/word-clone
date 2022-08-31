@@ -1,20 +1,15 @@
 import React, { Fragment } from "react";
-import { checkGuess } from "../../game-helpers";
 import { range } from "../../utils";
 
-function Guess({ guess, answer }) {
+function Guess({ guess }) {
   const columns = range(0, 5);
-
-  const checkedGuess = checkGuess(guess, answer);
 
   return (
     <p className="guess">
       {columns.map((i) => (
         <Fragment key={i}>
-          {checkedGuess ? (
-            <span className={`cell ${checkedGuess[i].status}`}>
-              {checkedGuess[i].letter}
-            </span>
+          {guess?.length > 0 ? (
+            <span className={`cell ${guess[i].status}`}>{guess[i].letter}</span>
           ) : (
             <span className="cell"></span>
           )}
