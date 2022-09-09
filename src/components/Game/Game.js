@@ -5,7 +5,8 @@ import { WORDS } from "../../data";
 import WordInput from "../WordInput";
 import GuessResults from "../GuessResults";
 import { NUM_OF_GUESSES_ALLOWED } from "../../constants";
-import Banner from "../Banner";
+import WinBanner from "../WinBanner";
+import LostBanner from "../LostBanner";
 import { checkGuess, isWinning } from "../../game-helpers";
 
 // Pick a random word on every pageload.
@@ -25,14 +26,17 @@ function Game() {
 
     if (!guess) return;
 
-    setGuesses([...guesses, guess]);
+    // ❗ This is an IMPORTANT step
+    const nextGuesses = [...guesses, guess];
+
+    setGuesses(nextGuesses);
 
     if (isWinning(guess)) {
       setWinning(true);
-      setGuessTimes(guesses.length + 1);
+      setGuessTimes(nextGuesses.length);
     } else if (
       !isWinning(guess) &&
-      guesses.length === NUM_OF_GUESSES_ALLOWED - 1
+      nextGuesses.length === NUM_OF_GUESSES_ALLOWED
     ) {
       setWinning(false);
     }
@@ -44,7 +48,8 @@ function Game() {
     <>
       <GuessResults guesses={guesses} />
       <WordInput addGuess={addGuess} />
-      <Banner winning={winning} guessTimes={guessTimes} answer={answer} />
+      {winning && <WinBanner guessTimes={guessTimes} />}
+      {winning === false && <LostBanner answer={answer} />}
     </>
   );
 }
